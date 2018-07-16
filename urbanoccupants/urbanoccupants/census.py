@@ -194,7 +194,7 @@ NOMIS_LSOA_GREATER_LONDON = [NOMIS_LSOA_BARKING_AND_DAGENHAM,NOMIS_LSOA_BERNET,N
                              NOMIS_LSOA_WESTMINSTER]
 
 
-LONDON_BOROUGHS = ["Westminster", "Kensington and Chelsea", "City of London"
+LONDON_BOROUGHS = ["Westminster", "Kensington and Chelsea", "City of London",
                    "Hammersmith and Fulham", "Wandsworth", "Lambeth", "Southwark", "Tower Hamlets",
                    "Hackney", "Islington", "Camden", "Brent", "Ealing", "Hounslow",
                    "Richmond upon Thames", "Kingston upon Thames", "Merton", "Sutton", "Croydon",
