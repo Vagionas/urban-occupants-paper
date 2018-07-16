@@ -8,7 +8,7 @@ household-features:
 time-step-size-minutes: 10
 start-time: 2005-01-07 12:00
 study-area: GREATER_LONDON
-spatial-resolution: WARD
+spatial-resolution: LSOA
 number-processes: 12
 java-heap-size: 32
 number-time-steps: 2

@@ -3,20 +3,20 @@ build:
 	mkdir ./build
 
 .PHONY: paper clean tus-data test
-paper: | build build/paper.docx
+paper:  build build/paper.docx
 
 clean:
 	rm -rf ./build/*
 
-test: | build
+test:  build
 	py.test
 
 tus-data: build/seed.pickle build/markov-ts.pickle
 
-build/seed.pickle: ./data/UKDA-4504-tab/tab/Individual_data_5.tab ./scripts/tus/seed.py | build
+build/seed.pickle: ./data/UKDA-4504-tab/tab/Individual_data_5.tab ./scripts/tus/seed.py  build
 	python ./scripts/tus/seed.py ./data/UKDA-4504-tab/tab/Individual_data_5.tab ./build/seed.pickle
 
-build/markov-ts.pickle: ./data/UKDA-4504-tab/tab/diary_data_8.tab ./scripts/tus/markovts.py | build
+build/markov-ts.pickle: ./data/UKDA-4504-tab/tab/diary_data_8.tab ./scripts/tus/markovts.py  build
 	python ./scripts/tus/markovts.py ./data/UKDA-4504-tab/tab/diary_data_8.tab ./build/markov-ts.pickle
 
 build/feature-association.pickle build/ts-association.pickle: ./build/seed.pickle ./build/markov-ts.pickle ./scripts/tus/association.py
@@ -34,7 +34,7 @@ build/population-cluster.png: ./build/seed.pickle ./build/markov-ts.pickle ./scr
 build/sim-input.db: ./build/seed.pickle ./build/markov-ts.pickle ./config/default.yaml ./scripts/simulationinput.py
 	python ./scripts/simulationinput.py ./build/seed.pickle ./build/markov-ts.pickle ./config/default.yaml build/sim-input.db
 
-build/energy-agents.jar: | build
+build/energy-agents.jar:  build
 	curl -Lo build/energy-agents.jar 'https://github.com/timtroendle/energy-agents/releases/download/v1.0.0/energy-agents-1.0.0-jar-with-dependencies.jar'
 
 build/sim-output.db: build/energy-agents.jar build/sim-input.db scripts/runsim.py config/default.yaml
