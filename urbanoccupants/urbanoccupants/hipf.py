@@ -163,7 +163,7 @@ def _rescale_weights(reference_sample, weights, controls_individuals, controls_h
           for p in range(0, largest_household_size + 1)]
     polynom = [(grand_total_hh / grand_total_ind * p - 1) * Fp[p]
                for p in range(0, largest_household_size + 1)]
-    roots = Polynomial(polynom).roots()
+    roots = Polynomial(polynom).roots().round(decimals=12)
     dx = list(filter(lambda x: np.real(x) > 0, filterfalse(lambda x: np.iscomplex(x), roots)))
     assert len(dx) == 1
     d = np.real(dx[0])
