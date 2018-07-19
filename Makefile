@@ -79,4 +79,5 @@ build/sim-output-london.db: build/energy-agents.jar build/sim-input-london.db sc
 	python scripts/runsim.py build/energy-agents.jar build/sim-input-london.db build/sim-output-london.db config/greater-london.yaml
 
 build/choropleth-london.png: build/sim-output-london.db config/greater-london.yaml scripts/plot/simulationresultsaggregated.py
-	python scripts/plot/simulationresults.py build/sim-output-london.db config/greater-london.yaml build/choropleth-london.png
+	python scripts/plot/simulationresultsaggregated.py build/sim-output-london.db config/greater-london.yaml build/choropleth-london.png
+
