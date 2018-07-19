@@ -216,7 +216,7 @@ def _write_dwellings_table(households, config, path_to_db):
             'initialTemperature': config['dwelling']['initial-temperature'],
             'heatingControlStrategy': config['dwelling']['heating-control-strategy'],
             'region': [household.region for household in households],
-            'districtId': [int(household.region.replace('E', '1')) for household in households]
+            'districtId': [int(str(household.region).replace('E', '1')) for household in households]
         }
     )
     _df_to_input_db(df, uo.DWELLINGS_TABLE_NAME, path_to_db)
