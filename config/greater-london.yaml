@@ -6,12 +6,12 @@ people-features:
 household-features:
     - PSEUDO
 time-step-size-minutes: 10
-start-time: 2005-01-07 12:00
+start-time: 2005-01-07 00:00
 study-area: GREATER_LONDON
 spatial-resolution: LSOA
-number-processes: 12
+number-processes: 24
 java-heap-size: 32
-number-time-steps: 2
+number-time-steps: 288
 set-point-while-home: 22
 set-point-while-asleep: 18
 wake-up-time: '07:00'
