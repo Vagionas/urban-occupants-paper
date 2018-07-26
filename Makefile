@@ -35,7 +35,7 @@ build/sim-input.db: ./build/seed.pickle ./build/markov-ts.pickle ./config/defaul
 	python ./scripts/simulationinput.py ./build/seed.pickle ./build/markov-ts.pickle ./config/default.yaml build/sim-input.db
 
 build/energy-agents.jar:  build
-	curl -Lo build/energy-agents.jar 'https://github.com/Vagionas/energy-agents/releases/download/v1.0.1/energy-agents-1.0.1-jar-with-dependencies.jar'
+	curl -Lo build/energy-agents.jar 'https://github.com/Vagionas/energy-agents/releases/download/v1.1.1/energy-agents-1.1.1-jar-with-dependencies.jar'
 
 build/sim-output.db: build/energy-agents.jar build/sim-input.db scripts/runsim.py config/default.yaml
 	python scripts/runsim.py build/energy-agents.jar build/sim-input.db build/sim-output.db config/default.yaml
