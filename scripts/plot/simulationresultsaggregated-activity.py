@@ -57,17 +57,14 @@ def _read_geo_data(config, activity, timepoint):
     geo_data = uo.census.read_shape_file(config['study-area'], config['spatial-resolution'])
 
     activity.set_index(['datetime', 'region'], inplace=True)
-    #occupancy = activity.sort_index().loc['2005-01-07 12:00:00',:].value.str.replace('{','').str.replace('}','').str.replace(',','').str.split()
     occupancy = activity.sort_index().loc[timepoint,:].copy().drop(['id'], axis=1).reset_index(level='datetime', drop=True)
     occupancy.value = occupancy.value.str.replace('{','').str.replace('}','').str.replace(',','').str.split()
-    #geo_data['occupancy'] =[0]*len(occupancy)
     occupancy = occupancy.assign(HOME=np.zeros(len(occupancy)), NOT_AT_HOME=np.zeros(len(occupancy)), SLEEP_AT_HOME=np.zeros(len(occupancy)))
     for i in range(0,len(occupancy)):
         occupancy.iloc[i,1] = next((int(re.split('[A-Z_=]+', occupancy.value[i][j])[1]) for j in range(0,len(occupancy.value[i])) if occupancy.value[i][j][0]=='H'),0)
         occupancy.iloc[i,2] = next((int(re.split('[A-Z_=]+', occupancy.value[i][j])[1]) for j in range(0,len(occupancy.value[i])) if occupancy.value[i][j][0]=='N'),0)
         occupancy.iloc[i,3] = next((int(re.split('[A-Z_=]+', occupancy.value[i][j])[1]) for j in range(0,len(occupancy.value[i])) if occupancy.value[i][j][0]=='S'),0)
     geo_data['occupancy'] = (occupancy.HOME+occupancy.SLEEP_AT_HOME)/(occupancy.NOT_AT_HOME+occupancy.SLEEP_AT_HOME+occupancy.HOME)
-    #geo_data['occupancy']  = pd.Series(occupancy).reset_index(level='datetime', drop=True)
     return geo_data
 
 
@@ -84,8 +81,8 @@ def _plot_choropleth(geo_data, path_to_choropleth):
         linewidth=0.2,
         legend=True,
         cmap='viridis',
-        vmin=0,
-        vmax=1,
+        #vmin=0,
+        #vmax=1,
         ax=ax
     )
     ax.set_aspect(1)
