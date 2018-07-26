@@ -81,3 +81,18 @@ build/sim-output-london.db: build/energy-agents.jar build/sim-input-london.db sc
 build/choropleth-london.png: build/sim-output-london.db config/greater-london.yaml scripts/plot/simulationresultsaggregated.py
 	python scripts/plot/simulationresultsaggregated.py build/sim-output-london.db config/greater-london.yaml build/choropleth-london.png
 
+
+build/choropleth-econ-test-21-07.png:
+	python scripts/plot/simulationresults-test-21-07.py build/sim-output-econ-test-21-07.db config/econ-test-21-07.yaml build/choropleth-econ-test-21-07.png
+
+
+build/sim-input-london-activity.db:
+	python ./scripts/simulationinput.py ./build/seed.pickle ./build/markov-ts.pickle ./config/greater-london-activity.yaml build/sim-input-london-activity.db
+
+build/sim-ouput-london-activity.db:
+	python scripts/runsim.py build/energy-agents.jar build/sim-input-london-activity.db build/sim-output-london-activity.db config/greater-london-activity.yaml
+
+build/choropleth-london-activity-1200.png: build/sim-output-london.db config/greater-london.yaml scripts/plot/simulationresultsaggregated.py
+	python scripts/plot/simulationresultsaggregated-activity.py build/sim-output-london-activity.db config/greater-london-activity.yaml build/choropleth-london-activity-1200.png "2005-01-07 12:00:00"
+
+
