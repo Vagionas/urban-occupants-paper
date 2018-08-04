@@ -24,13 +24,15 @@ ENERGY_TIME_SPAN = timedelta(days=7) # energy will be reported as kWh per timesp
 @click.argument('path_to_simulation_results')
 @click.argument('path_to_config')
 @click.argument('path_to_choropleth_plot')
+@click.argument('path_to_plot')
 def plot_simulation_results(path_to_simulation_results, path_to_config,
-                            path_to_choropleth_plot):
+                            path_to_choropleth_plot, path_to_plot):
     sns.set_context('paper')
     disk_engine = sqlalchemy.create_engine('sqlite:///{}'.format(path_to_simulation_results))
     thermal_power = _read_average_thermal_power(disk_engine)
     geo_data = _read_geo_data(uo.read_simulation_config(path_to_config), thermal_power)
     _plot_choropleth(geo_data, path_to_choropleth_plot)
+    _plot_thermal_power(thermal_power,path_to_plot)
 
 
 def _read_average_thermal_power(disk_engine):
@@ -98,6 +100,33 @@ def _plot_choropleth(geo_data, path_to_choropleth):
 
     fig.savefig(path_to_choropleth, dpi=300)
     sns.set_context('paper')
+
+
+def _plot_thermal_power(thermal_power, path_to_plot):
+    def _xTickFormatter(x, pos):
+        return pd.to_datetime(x).time()
+    fig = plt.figure(figsize=(8, 4), dpi=300)
+    ax = fig.add_subplot(111)
+    sns.tsplot(
+        data=thermal_power,
+        time='datetime',
+        unit='region',
+        value='value',
+        err_style='unit_traces',
+        ax=ax
+    )
+    _ = plt.ylabel('average [W]')
+    _ = plt.xlabel('time of the day')
+    ax.set_ylim(bottom=0)
+
+    ax.label_outer()
+
+    points_in_time = thermal_power.groupby('datetime').value.mean().index
+    xtick_locations = [5, 5 + 144 // 2, 149, 149 + 144 // 2] # not sure why they are shifted
+    ax.set_xticks([points_in_time[x].timestamp() * 10e8 for x in xtick_locations])
+    ax.xaxis.set_major_formatter(mpl.ticker.FuncFormatter(_xTickFormatter))
+
+    fig.savefig(path_to_plot, dpi=300)
 
 
 if __name__ == '__main__':
