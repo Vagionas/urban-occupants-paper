@@ -176,7 +176,7 @@ def _plot_thermal_power(thermal_power, path_to_plot):
     ax2.set_ylim(bottom=0)
 
     points_in_time = thermal_power.groupby('datetime').value.mean().index
-    xtick_locations = [5, 5 + 144 // 2, 149, 149 + 144 // 2] # not sure why they are shifted
+    xtick_locations = [0, 144 // 2-1, 143, 143 + 144 // 2] # not sure why they are shifted
     ax2.set_xticks([points_in_time[x].timestamp() * 10e8 for x in xtick_locations])
     ax2.xaxis.set_major_formatter(mpl.ticker.FuncFormatter(_xTickFormatter))
 
